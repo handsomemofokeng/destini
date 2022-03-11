@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'story_brain.dart';
 
 void main() => runApp(Destini());
@@ -8,18 +9,20 @@ class Destini extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: StoryPage(),
+      home: const StoryPage(),
     );
   }
 }
 
 class StoryPage extends StatefulWidget {
+  const StoryPage({Key? key}) : super(key: key);
+
   @override
   _StoryPageState createState() => _StoryPageState();
 }
 
 class _StoryPageState extends State<StoryPage> {
-  StoryBrain storyBrain =  StoryBrain();
+  StoryBrain storyBrain = StoryBrain();
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +50,52 @@ class _StoryPageState extends State<StoryPage> {
                     ),
                   ),
                 ),
+              ),
+              Expanded(
+                flex: 2,
+                child: TextButton(
+                  onPressed: () {
+                    setState(() {
+                      storyBrain.nextStory(1);
+                    });
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.red),
+                  ),
+                  child: Text(
+                    storyBrain.getChoice1(),
+                    style: const TextStyle(fontSize: 20.0, color: Colors.white),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              Expanded(
+                flex: 2,
+                child: Visibility(
+                  visible: storyBrain.buttonShouldBeVisible(),
+                  child: TextButton(
+                    onPressed: () {
+                      setState(() {
+                        storyBrain.nextStory(2);
+                      });
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blue),
+                    ),
+                    child: Text(
+                      storyBrain.getChoice2(),
+                      style:
+                          const TextStyle(fontSize: 20.0, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 20.0,
               ),
             ],
           ),
